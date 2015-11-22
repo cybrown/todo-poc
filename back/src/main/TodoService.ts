@@ -1,5 +1,6 @@
 import * as mysqlType from 'mysql';
 import * as knexType from 'knex';
+import {fromNode} from './util';
 
 export interface ITodo {
     id: number,
@@ -20,12 +21,8 @@ export class TodoService {
             .select('id', 'title', 'description', 'date', 'done')
             .from('todos')
             .toQuery();
-        return new Promise<ITodo[]>((resolve, reject) => {
-            this.connection.query(query, (err: any, values: any[]) => {
-                if (err) return reject(err);
-                resolve(values.map(value => this.mapFromDb(value)));
-            });
-        });
+        return fromNode<any[]>(cb => this.connection.query(query, cb))
+            .then(values => values.map(value => this.mapFromDb(value)));
     }
 
     mapFromDb(valueFromDb: any): ITodo {

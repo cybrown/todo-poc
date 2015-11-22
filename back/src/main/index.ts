@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as fs from 'fs';
 import * as bodyParser from 'body-parser';
-import * as mysql from 'mysql';
+import * as mysql from 'mysql2';
 import {TodoService} from './TodoService';
 import * as knex from 'knex';
 
@@ -25,7 +25,7 @@ connection.connect((err) => {
 const queryBuilder = knex({
     client: 'mysql',
     connection: undefined
-})
+});
 
 const todoService = new TodoService(connection, queryBuilder);
 
