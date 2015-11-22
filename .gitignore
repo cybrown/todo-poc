@@ -1,0 +1,9 @@
+/node_modules
+/tmp
+
+/front/public/bower_components
+/front/public/app.js
+/front/typings
+
+/back/typings
+/back/lib

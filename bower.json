@@ -1,0 +1,20 @@
+{
+  "name": "music",
+  "version": "0.0.1",
+  "authors": [
+    "Cy Brown <cy.brown59@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4"
+  }
+}
