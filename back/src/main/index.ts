@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as bodyParser from 'body-parser';
 import * as mysql from 'mysql';
 import {TodoService} from './TodoService';
+import * as knex from 'knex';
 
 const dbHost = '192.168.99.100';
 const dbPort = 3306;
@@ -21,7 +22,12 @@ connection.connect((err) => {
     }
 });
 
-const todoService = new TodoService(connection);
+const queryBuilder = knex({
+    client: 'mysql',
+    connection: undefined
+})
+
+const todoService = new TodoService(connection, queryBuilder);
 
 const standardBodyParsers = [bodyParser.json(), bodyParser.urlencoded({extended: false})];
 const staticRessources = express.static(__dirname + '/../../../front/public');

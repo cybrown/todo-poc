@@ -1,4 +1,5 @@
 import * as mysqlType from 'mysql';
+import * as knexType from 'knex';
 
 export interface ITodo {
     id: number,
@@ -10,16 +11,24 @@ export interface ITodo {
 
 export class TodoService {
 
-    constructor (private connection: mysqlType.IConnection) {
+    constructor (private connection: mysqlType.IConnection, private knex: knexType) {
 
     }
 
     findAll(): Promise<ITodo[]> {
         return new Promise<ITodo[]>((resolve, reject) => {
-            this.connection.query('SELECT * FROM todos', (err: any, values: any[]) => {
-                if (err) return reject(err);
-                resolve(values.map(value => this.mapFromDb(value)));
-            });
+            try {
+                const query = this.knex
+                    .select('id', 'title', 'description', 'date', 'done')
+                    .from('todos')
+                    .toQuery();
+                this.connection.query(query, (err: any, values: any[]) => {
+                    if (err) return reject(err);
+                    resolve(values.map(value => this.mapFromDb(value)));
+                });
+            } catch (e) {
+                reject(e);
+            }
         });
     }
 
