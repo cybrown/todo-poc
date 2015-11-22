@@ -36,7 +36,7 @@ const todoController = express.Router()
         .get('/', ...standardBodyParsers, (req, res) => {
             todoService.findAll()
                 .then(todos => res.json(todos))
-                .catch(err => res.send(err));
+                .catch(err => res.status(500).send(err));
         });
 
 const app = express();

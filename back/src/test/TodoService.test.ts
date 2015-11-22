@@ -5,9 +5,10 @@ describe('TodoService', () => {
 
     let todoService: TodoService;
     let connectionMock = {};
+    let knexMock = {};
 
     beforeEach(() => {
-        todoService = new TodoService(<any> connectionMock);
+        todoService = new TodoService(<any> connectionMock, <any> knexMock);
     });
 
     it ('should map from database', () => {

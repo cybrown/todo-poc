@@ -16,19 +16,15 @@ export class TodoService {
     }
 
     findAll(): Promise<ITodo[]> {
+        const query = this.knex
+            .select('id', 'title', 'description', 'date', 'done')
+            .from('todos')
+            .toQuery();
         return new Promise<ITodo[]>((resolve, reject) => {
-            try {
-                const query = this.knex
-                    .select('id', 'title', 'description', 'date', 'done')
-                    .from('todos')
-                    .toQuery();
-                this.connection.query(query, (err: any, values: any[]) => {
-                    if (err) return reject(err);
-                    resolve(values.map(value => this.mapFromDb(value)));
-                });
-            } catch (e) {
-                reject(e);
-            }
+            this.connection.query(query, (err: any, values: any[]) => {
+                if (err) return reject(err);
+                resolve(values.map(value => this.mapFromDb(value)));
+            });
         });
     }
 
