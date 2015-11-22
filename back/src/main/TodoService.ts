@@ -18,14 +18,18 @@ export class TodoService {
         return new Promise<ITodo[]>((resolve, reject) => {
             this.connection.query('SELECT * FROM todos', (err: any, values: any[]) => {
                 if (err) return reject(err);
-                resolve(values.map(value => ({
-                    id: value.id.toString(),
-                    title: value.title,
-                    description: value.description,
-                    date: value.date,
-                    done: !!value.done
-                })));
+                resolve(values.map(value => this.mapFromDb(value)));
             });
         });
+    }
+
+    mapFromDb(valueFromDb: any): ITodo {
+        return {
+            id: valueFromDb.id.toString(),
+            title: valueFromDb.title,
+            description: valueFromDb.description,
+            date: valueFromDb.date,
+            done: !!valueFromDb.done
+        };
     }
 }

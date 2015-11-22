@@ -24,7 +24,7 @@ connection.connect((err) => {
 const todoService = new TodoService(connection);
 
 const standardBodyParsers = [bodyParser.json(), bodyParser.urlencoded({extended: false})];
-const staticRessources = express.static(__dirname + '/../../front/public');
+const staticRessources = express.static(__dirname + '/../../../front/public');
 
 const todoController = express.Router()
         .get('/', ...standardBodyParsers, (req, res) => {
